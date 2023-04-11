@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Create</title>
+    <th:block th:replace="/fragments/resources :: head"></th:block>
+</head>
+<body>
+<nav th:replace="/fragments/nav :: nav(false)"></nav>
+<div class="container">
+    <h1 class="m-3">Offer detail</h1>
+    <div class="form-box w-50 m-auto">
+        <form id="offer-form" method="post" th:object="${offer}" th:action="@{|/offers/edit/*{id}|}">
+
+            <input type="hidden" th:field="*{pizza}">
+
+            <div class="my-4">
+                <label class="my-2" for="start-date">Offers start date</label>
+                <input class="form-control" type="date" id="start-date" th:field="*{startDate}"
+                       th:errorClass="is-invalid">
+                <div th:if="${#fields.hasErrors('startDate')}" class="invalid-feedback">
+                    <ul>
+                        <li th:each="err : ${#fields.errors('startDate')}" th:text="${err}"></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="my-4">
+                <label class="my-2" for="end-date">Offer end date</label>
+                <input class="form-control" type="date" id="end-date" th:field="*{endDate}">
+            </div>
+
+            <div class="my-4">
+                <label class="my-2" for="title">Offer title</label>
+                <input class="form-control" type="text" id="title" th:field="*{title}" th:errorClass="is-invalid">
+                <div th:if="${#fields.hasErrors('title')}" class="invalid-feedback">
+                    <ul>
+                        <li th:each="err : ${#fields.errors('title')}" th:text="${err}"></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary px-5">Update</button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

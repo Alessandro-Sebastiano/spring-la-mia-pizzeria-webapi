@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Edit</title>
+    <th:block th:replace="/fragments/resources :: head"></th:block>
+</head>
+<body>
+<nav th:replace="/fragments/nav :: nav(false)"></nav>
+<div class="container">
+    <h1 class="m-3">Pizza detail</h1>
+    <div class="form-box w-50 m-auto">
+        <form id="pizza-form" method="post" th:object="${pizza}" th:action="@{|/pizzas/edit/*{id}|}">
+
+            <div class="my-4">
+                <label class="my-2" for="name">Pizza's name</label>
+                <input class="form-control" type="text" id="name" th:field="*{name}" th:errorClass="is-invalid">
+                <div th:if="${#fields.hasErrors('name')}" class="invalid-feedback">
+                    <ul>
+                        <li th:each="err : ${#fields.errors('name')}" th:text="${err}"></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="my-4">
+                <label class="my-2" for="description">Pizza's description</label>
+                <input class="form-control" type="text" id="description" th:field="*{description}">
+            </div>
+
+            <div class="my-4">
+                <label class="my-2" for="price">Pizza's price</label>
+                <input class="form-control" type="text" id="price" th:field="*{price}" th:errorClass="is-invalid">
+                <div th:if="${#fields.hasErrors('price')}" class="invalid-feedback">
+                    <ul>
+                        <li th:each="err : ${#fields.errors('price')}" th:text="${err}"></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary px-5">Update</button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

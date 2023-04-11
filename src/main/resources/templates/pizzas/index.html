@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Pizzas</title>
+    <th:block th:replace="/fragments/resources :: head"></th:block>
+</head>
+<body>
+<nav th:replace="/fragments/nav :: nav(true)"></nav>
+
+<div th:if="${message}">
+    <th:block th:replace="/fragments/alert :: alert(${message.typeAlertMessage}, ${message.textMessage})"></th:block>
+</div>
+
+<div class="container px-5">
+    <h1 class="text-center my-5">All pizzas</h1>
+
+    <table th:if="${list}" class="table text-center">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+            <th scope="col">Price</th>
+        </tr>
+        </thead>
+        <tbody class="table-group-divider">
+        <tr th:each="pizza: ${list}">
+            <th th:text="${pizza.id}"></th>
+            <td><a th:text="${pizza.name}" th:href="@{/pizzas/{id}(id=${pizza.id})}"></a></td>
+            <td th:text="${pizza.description}"></td>
+            <td th:text="${pizza.price}"></td>
+            <td>
+                <a class="text-decoration-none text-white" th:href="@{/pizzas/edit/{id}(id=${pizza.id})}">
+                    <button class="btn btn-primary" type="submit">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </button>
+                </a>
+            </td>
+            <td>
+                <form id="delete-form" method="get" th:action="@{/pizzas/delete/{id}(id=${pizza.id})}">
+                    <button class="btn btn-primary" type="submit">
+                        <i class="fa-sharp fa-solid fa-trash"></i>
+                    </button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div th:if="${list.size} == 0">
+        <h1 class="text-center">No pizzas present</h1>
+    </div>
+
+    <div class="text-center my-5">
+        <a th:href="@{/pizzas/create}">
+            <button class="btn btn-primary">Add new pizza</button>
+        </a>
+    </div>
+
+</div>
+
+</body>
+</html>

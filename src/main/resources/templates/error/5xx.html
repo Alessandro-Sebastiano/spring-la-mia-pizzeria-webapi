@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Error</title>
+    <th:block th:replace="/fragments/resources :: head"></th:block>
+</head>
+<body class="bg-danger text-light">
+<div class="container">
+    <h1 class="text-center my-5">Server error&nbsp;<i class="fa-solid fa-gears"></i></h1>
+    <div class="text-center">
+        <a th:href="@{/}">
+            <button type="button" class="btn btn-secondary">Home page</button>
+        </a>
+    </div>
+
+    <!--   debug -->
+    <div th:if="${exception}">
+        <p th:text="${exception}"></p>
+        <p th:text="${trace}"></p>
+    </div>
+</div>
+</body>
+</html>

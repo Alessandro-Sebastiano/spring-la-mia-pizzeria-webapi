@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Pizza detail</title>
+    <th:block th:replace="/fragments/resources :: head"></th:block>
+</head>
+<body>
+<nav th:replace="/fragments/nav :: nav(false)"></nav>
+<div th:if="${message}">
+    <th:block th:replace="/fragments/alert :: alert(${message.typeAlertMessage}, ${message.textMessage})"></th:block>
+</div>
+<div>
+    <a th:href="@{/pizzas}" class="text-decoration-none m-4 d-inline-block"><i
+            class="fa-solid fa-arrow-left"></i> - go to all pizzas</a>
+</div>
+<div class="container">
+    <div class="card w-50 m-auto">
+        <div class="card-body">
+            <h3 class="card-title mb-4" th:text="${pizza.name}"></h3>
+            <div class="d-flex justify-content-between">
+                <p class="card-text m-0" th:text="${pizza.description}"></p>
+                <a href="#" class="btn btn-primary px-4" th:text=" '$' + ${pizza.price}">Button</a>
+            </div>
+        </div>
+    </div>
+
+    <h2 class="my-5 text-decoration-underline">Special Offer
+        <a th:href="@{/offers/create(pizzaId=${pizza.id})}">
+            <button type="button" class="btn btn-primary rounded-circle ms-3">
+                <i class="fa-solid fa-plus"></i>
+            </button>
+        </a>
+    </h2>
+    <table th:if="${pizza.offer}" class="table text-center">
+        <thead>
+        <tr>
+            <th scope="col">Start Date</th>
+            <th scope="col">End Date</th>
+            <th scope="col">Title</th>
+        </tr>
+        </thead>
+        <tbody class="table-group-divider">
+        <tr th:each="offer: ${pizza.offer}">
+            <td th:text="${offer.startDate}"></td>
+            <td th:text="${offer.endDate}" th:href="@{/pizzas/{id}(id=${pizza.id})}"></td>
+            <td th:text="${offer.title}"></td>
+            <td>
+                <a class="text-decoration-none text-white" th:href="@{/offers/edit/{id}(id=${offer.id})}">
+                    <button class="btn btn-primary" type="button">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </button>
+                </a>
+            </td>
+            <td>
+                <form id="delete-form" method="get" th:action="@{/offers/delete/{id}(id=${offer.id})}">
+                    <button class="btn btn-primary" type="submit">
+                        <i class="fa-sharp fa-solid fa-trash"></i>
+                    </button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
